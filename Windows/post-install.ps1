@@ -22,6 +22,7 @@ winget install KiCad.KiCad
 winget install Microsoft.PowerToys
 winget install Microsoft.PowerShell-Preview
 winget install Microsoft.WindowsTerminalPreview
+winget install Files-Community.Files
 
 # Security + Privacy
 winget install ProtonTechnologies.ProtonVPN
