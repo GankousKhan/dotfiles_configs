@@ -1,28 +1,44 @@
+###############################################################################
+# Post install script to setup developer environment
+#   Todo: Add in ability to choose what kind of workload by argument.
+###############################################################################
+
+# Check if powershell is launched as elevevated
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+if(-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
+{
+    Write-Warning "Please run PowerShell as administrator"
+        exit
+}
+
+###############################################################################
+# Installs
+###############################################################################
+# Choco
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+choco feature enable -n=allowGlobalConfirmation
+
 # Developer Tools
-winget install VSCodium.VSCodium
+winget install Microsoft.VisualStudioCodeInsiders-User-x64
 winget install Microsoft.VisualStudio.Community
 winget intsall Insomnia.Insomnia
 winget install Insomnia.InsomniaDesigner
 winget install OpenJS.NodeJS
 winget install LINQPad.LINQPad6
-winget install SourceFoundry.HackFonts
-winget install GitHub.GitHubDesktopBeta
+winget install Git.Git
 winget install GitHub.cli
 winget install Telerik.Fiddler
 winget install Docker.DockerDesktop
 winget install dnGrep.dnGrep
 winget install Microsoft.dotnet
 winget install JetBrains.Toolbox
-
-# Modeling and CAD
-winget install OpenSCAD.OpenSCAD
-winget install KiCad.KiCad
+choco install ripgrep
+choco install ripgrep-all
 
 # Windows
 winget install Microsoft.PowerToys
 winget install Microsoft.PowerShell-Preview
 winget install Microsoft.WindowsTerminalPreview
-winget install Files-Community.Files
 
 # Security + Privacy
 winget install ProtonTechnologies.ProtonVPN
@@ -41,12 +57,26 @@ winget install VideoLAN.VLC
 winget install 7zip.7zip
 
 # Gaming
-winget install Valve.Steam
-winget install EpicGames.EpicGamesLauncher
+# winget install Valve.Steam
+# winget install EpicGames.EpicGamesLauncher
 
 # Chat
-winget install Discord.Discord
-winget install Signal.Signal
-winget install Microsoft.Teams
-winget install Telegram.TelegramDesktop
-winget install Zoom.Zoom
+# winget install Discord.Discord
+# winget install Signal.Signal
+# winget install Microsoft.Teams
+# winget install Telegram.TelegramDesktop
+# winget install Zoom.Zoom
+
+###############################################################################
+# Environment Config
+###############################################################################
+Set-Location C:\
+mkdir GitHub
+Set-Location GitHub
+gh repo clone GankousKhan/dotfiles_configs
+[Environment]::SetEnvironmentVariable("Scripts","C:\GitHub\dotfiles_configs\Windows\tools","User")
+
+###############################################################################
+# Cleanup
+###############################################################################
+choco feature disable -n=allowGlobalConfirmation
