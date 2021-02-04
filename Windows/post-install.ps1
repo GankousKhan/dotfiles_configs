@@ -74,9 +74,30 @@ Set-Location C:\
 mkdir GitHub
 Set-Location GitHub
 gh repo clone GankousKhan/dotfiles_configs
-[Environment]::SetEnvironmentVariable("Scripts","C:\GitHub\dotfiles_configs\Windows\tools","User")
 
-###############################################################################
-# Cleanup
-###############################################################################
+# Check if path already exists and add if not
+$oPath = ($env:path).split(";")
+
+$pathsToAdd = @("C:\GitHub\dotfiles_configs\Windows\tools", "C:\GitHub\dotfiles_configs\Windows\scripts")
+$paths = ""
+for($i = 0; $i -lt $pathsToAdd.length; $i++) {
+    $isUnique = 1;
+    for($j = 0; $j -lt $oPath.length; $j++) {
+        if ($pathsToAdd[$i] -eq $oPath[$j]) {
+            $isUnique = 0;
+        }
+    }
+
+    if ($isUnique -ne 0) {
+        $paths = $paths + ";" + $pathsToAdd[$i]
+    }
+}
+
+$oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
+$newpath = $oldpath + $paths
+Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newpath
+
+# ###############################################################################
+# # Cleanup
+# ###############################################################################
 choco feature disable -n=allowGlobalConfirmation
