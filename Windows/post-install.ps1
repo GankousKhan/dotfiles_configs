@@ -18,54 +18,76 @@ if(-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Admi
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco feature enable -n=allowGlobalConfirmation
 
+# Powershell Windows Update
+Install-Module -Name PSWindowsUpdate –Force
+Add-WUServiceManager -ServiceID 7971f918-a847-4430-9279-4a52d1efe18d # Optional Updates
+
 # Developer Tools
-winget install Microsoft.VisualStudioCodeInsiders-User-x64
-winget install Microsoft.VisualStudio.Community
-winget intsall Insomnia.Insomnia
-winget install Insomnia.InsomniaDesigner
-winget install OpenJS.NodeJS
-winget install LINQPad.LINQPad6
-winget install Git.Git
-winget install GitHub.cli
-winget install Telerik.Fiddler
-winget install Docker.DockerDesktop
-winget install dnGrep.dnGrep
-winget install Microsoft.dotnet
-winget install JetBrains.Toolbox
-choco install ripgrep
-choco install ripgrep-all
+winget install Microsoft.VisualStudioCodeInsiders-User-x64;
+winget install Microsoft.VisualStudio.Community;
+winget intsall Insomnia.Insomnia;
+winget install Insomnia.InsomniaDesigner;
+winget install OpenJS.NodeJS;
+winget install LINQPad.LINQPad6;
+winget install Git.Git;
+winget install GitHub.cli;
+winget install GitHub.GitLFS;
+winget install GnuPG.GnuPG;
+winget install HTTPToolKit.HTTPToolKit;
+winget install Docker.DockerDesktop;
+winget install dnGrep.dnGrep;
+winget install Microsoft.dotnet;
+winget install Microsoft.dotNetFramework;
+winget install JetBrains.Toolbox;
+choco install ripgrep;
+choco install ripgrep-all;
+winget install DockStation.DockStation;
+winget install dbeaver.dbeaver;
 
 # Windows
-winget install Microsoft.PowerToys
-winget install Microsoft.PowerShell-Preview
-winget install Microsoft.WindowsTerminalPreview
+winget install Microsoft.PowerToys;
+winget install Microsoft.PowerShell-Preview;
+winget install Microsoft.WindowsTerminalPreview;
+winget install Files-Community.Files;
 
 # Security + Privacy
-winget install ProtonTechnologies.ProtonVPN
-winget install Bitwarden.Bitwarden
-winget install AxCrypt.AxCrypt
+winget install ProtonTechnologies.ProtonVPN;
+winget install Bitwarden.Bitwarden;
+winget install zerotier.zerotier;
+winget install Cryptomator.Cryptomator;
 
 # Internet
-winget install Mozilla.FirefoxDeveloperEdition
-winget install DelugeTeam.Deluge
-winget install zerotier.zerotier
+winget install eloston.ungoogled-chromium;
+winget install Mozilla.FirefoxDeveloperEdition;
+winget install DelugeTeam.Deluge;
 
 # Video + Music
-winget install VideoLAN.VLC
+winget install VideoLAN.VLC;
+
+# Productivity
+winget install Nextcloud.NextcloudDesktop;
+winget install Empoche.Empoche;
+winget install ONLYOFFICE.DesktopEditors;
 
 # Misc
-winget install 7zip.7zip
+winget install Balena.Etcher;
+winget install 7zip.7zip;
+winget install Nvidia.RTXVoice;
+winget install Icons8.Lunacy;
+winget install Mega.MEGASync;
+winget install SourceFoundry.HackFonts;
+winget install Captura.Captura;
 
 # Gaming
-# winget install Valve.Steam
-# winget install EpicGames.EpicGamesLauncher
+winget install Valve.Steam;
+winget install EpicGames.EpicGamesLauncher;
 
 # Chat
-# winget install Discord.Discord
-# winget install Signal.Signal
-# winget install Microsoft.Teams
-# winget install Telegram.TelegramDesktop
-# winget install Zoom.Zoom
+winget install Discord.Discord;
+winget install Signal.Signal;
+winget install Microsoft.Teams;
+winget install Telegram.TelegramDesktop;
+winget install Zoom.Zoom;
 
 ###############################################################################
 # Environment Config
